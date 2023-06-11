@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Order::class, User::class);
     }
+
+    public function getBalanceAttribute()
+    {
+        return $this->wallet ? $this->wallet->amount : 0;
+    }
 }
