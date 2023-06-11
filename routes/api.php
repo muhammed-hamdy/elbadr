@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function() {
         Route::get('/me', [OrderController::class, 'myOrders']);
         Route::get('/', [OrderController::class, 'index']);
+        Route::get('/{id}', [OrderController::class, 'report']);
     });
 
     Route::group(['prefix' => 'balance', 'as' => 'balance.'], function() {

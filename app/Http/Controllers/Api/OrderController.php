@@ -42,4 +42,18 @@ class OrderController extends Controller
 
         return OrderResource::collection($orders);
     }
+
+    public function report(Request $request, $id)
+    {
+        $user = auth()->user();
+        if(!$user->hasPermissionTo('view all orders')) {
+            return response()->json([
+                'message' => 'unauthorized request'
+            ], 403);
+        }
+
+        $request->merge(['user_id' => $id]);
+        $orders = $this->repository->getReport($id);
+        return OrderResource::collection($orders);
+    }
 }

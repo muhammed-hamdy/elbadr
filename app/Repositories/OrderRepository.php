@@ -14,4 +14,15 @@ class OrderRepository extends CrudRepository implements OrderRepositoryInterface
 		parent::__construct(Order::class);
     }
 
+    public function getReport($user_id)
+    {
+        $orders = $this->builder::where(function($query) use($user_id) {
+            return $query->where('user_id', $user_id)
+            ->orWhere('receiver_id', $user_id);
+        })
+        ->get();
+        return $orders;
+    }
+
+
 }

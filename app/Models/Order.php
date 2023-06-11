@@ -18,6 +18,10 @@ class Order extends Model
         'status',
     ];
 
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -41,7 +45,7 @@ class Order extends Model
     public function getOrderTypeAttribute()
     {
         if($this->receiver_id) {
-            return 'transfer balance ' . $this->amount .' from ' . $this->user?->name . 'to ' . $this->receiver?->name;
+            return 'transfer balance ' . $this->amount .' from ' . $this->user?->name . ' to ' . $this->receiver?->name;
         }
 
         if($this->product_id) {
@@ -49,7 +53,21 @@ class Order extends Model
         }
 
         if($this->user_id) {
-            return 'balance request ' . $this->amount;
+            return 'balance request with amount ' . $this->amount;
         }
+    }
+
+    public function balanceBefore($user_id)
+    {
+        $transaction = $this->transactions->where('user_id', $user_id)->first();
+
+        return $transaction ? $transaction->balance_before : null;
+    }
+
+    public function balanceAfter($user_id)
+    {
+        $transaction = $this->transactions->where('user_id', $user_id)->first();
+
+        return $transaction ? $transaction->balance_after : null;
     }
 }
