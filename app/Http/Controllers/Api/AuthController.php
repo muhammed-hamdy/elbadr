@@ -45,6 +45,7 @@ class AuthController extends Controller
 
             $user = $this->repository->create($data);
 
+            $user->assignRole('user');
             return response()->json([
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);

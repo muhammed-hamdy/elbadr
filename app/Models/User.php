@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function products()
     {
-        return $this->hasManyThrough(Order::class, User::class);
+        return $this->hasManyThrough(Product::class, Order::class, 'user_id', 'id', 'id', 'product_id');
     }
 
     public function getBalanceAttribute()

@@ -16,58 +16,65 @@ class WalletRepository extends CrudRepository implements WalletRepositoryInterfa
 		parent::__construct(Wallet::class);
     }
 
-    public function createBalanceDeposit($user_id, $amount,  $status = 0)
+    public function firstOrCreate($user_id)
     {
-        $orderRepository = new OrderRepository;
-        $order = $orderRepository->create([
-            'type' => 'recharge_balance',
+        return $this->builder::firstOrCreate([
             'user_id' => $user_id,
-            'status' => $status,
-            'amount' => $amount
         ]);
-
-        $transactionRepository = new TransactionRepository;
-        $transaction = $transactionRepository->create([
-            'type' => 'deposit',
-            'user_id' => $user_id,
-            'status' => $status,
-            'amount' => $amount,
-            'order_id' => $order->id,
-        ]);
-
-        return $order;
     }
 
-    public function createBalanceTransfer($user_id, $receiver_id, $amount, $status = 0)
-    {
-        $orderRepository = new OrderRepository;
-        $order = $orderRepository->create([
-            'type' => 'recharge_balance',
-            'user_id' => $user_id,
-            'receiver_id' => $receiver_id,
-            'status' => $status,
-            'amount' => $amount
-        ]);
+    // public function createBalanceDeposit($user_id, $amount,  $status = 0)
+    // {
+    //     $orderRepository = new OrderRepository;
+    //     $order = $orderRepository->create([
+    //         'type' => 'recharge_balance',
+    //         'user_id' => $user_id,
+    //         'status' => $status,
+    //         'amount' => $amount
+    //     ]);
 
-        $transactionRepository = new TransactionRepository;
-        $transactionDeposit = $transactionRepository->create([
-            'type' => 'deposit',
-            'user_id' => $receiver_id,
-            'status' => $status,
-            'amount' => $amount,
-            'order_id' => $order->id,
-        ]);
+    //     $transactionRepository = new TransactionRepository;
+    //     $transaction = $transactionRepository->create([
+    //         'type' => 'deposit',
+    //         'user_id' => $user_id,
+    //         'status' => $status,
+    //         'amount' => $amount,
+    //         'order_id' => $order->id,
+    //     ]);
 
-        $transactionWithDraw = $transactionRepository->create([
-            'type' => 'withdraw',
-            'user_id' => $user_id,
-            'status' => $status,
-            'amount' => $amount,
-            'order_id' => $order->id,
-        ]);
+    //     return $order;
+    // }
 
-        return $order;
-    }
+    // public function createBalanceTransfer($user_id, $receiver_id, $amount, $status = 0)
+    // {
+    //     $orderRepository = new OrderRepository;
+    //     $order = $orderRepository->create([
+    //         'type' => 'recharge_balance',
+    //         'user_id' => $user_id,
+    //         'receiver_id' => $receiver_id,
+    //         'status' => $status,
+    //         'amount' => $amount
+    //     ]);
+
+    //     $transactionRepository = new TransactionRepository;
+    //     $transactionDeposit = $transactionRepository->create([
+    //         'type' => 'deposit',
+    //         'user_id' => $receiver_id,
+    //         'status' => $status,
+    //         'amount' => $amount,
+    //         'order_id' => $order->id,
+    //     ]);
+
+    //     $transactionWithDraw = $transactionRepository->create([
+    //         'type' => 'withdraw',
+    //         'user_id' => $user_id,
+    //         'status' => $status,
+    //         'amount' => $amount,
+    //         'order_id' => $order->id,
+    //     ]);
+
+    //     return $order;
+    // }
 
     // public function createBalanceWithDraw($user_id, $status = 0);
     // public function confirmBalanceTransaction($transaction_id);

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id')->default(0);
-            $table->unsignedBigInteger('receiver_id')->default(0);
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('receiver_id');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

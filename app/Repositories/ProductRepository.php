@@ -14,4 +14,15 @@ class ProductRepository extends CrudRepository implements ProductRepositoryInter
 		parent::__construct(Product::class);
     }
 
+    public function getActive()
+    {
+        return $this->selectWhere(['status' => 1]);
+    }
+
+    public function getActiveById($id)
+    {
+        return $this->getActive()->where('id', $id)->first();
+
+    }
+
 }

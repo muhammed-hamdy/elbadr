@@ -32,4 +32,24 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function getOrderTypeAttribute()
+    {
+        if($this->receiver_id) {
+            return 'transfer balance ' . $this->amount .' from ' . $this->user?->name . 'to ' . $this->receiver?->name;
+        }
+
+        if($this->product_id) {
+            return 'buying product ' . $this->product->title . ' for '. $this->amount .' from stock';
+        }
+
+        if($this->user_id) {
+            return 'balance request ' . $this->amount;
+        }
+    }
 }

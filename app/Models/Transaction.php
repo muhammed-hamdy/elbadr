@@ -16,6 +16,8 @@ class Transaction extends Model
         'order_id',
         'status',
         'confirmed',
+        'balance_before',
+        'balance_after',
     ];
 
     public function order()

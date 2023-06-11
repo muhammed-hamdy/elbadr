@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class CrudRepository implements CrudRepositoryInterface
 {
 
-    private $builder;
+    protected $builder;
 
-	public function __construct(Model $builder)
+	public function __construct($builder)
 	{
 		$this->builder = $builder;
 	}
